@@ -60,7 +60,7 @@ class PollItem extends Component {
                     <IconButton onClick={e => {
                         e.stopPropagation();
                         this.props.onDelete(item.id);
-                    }} disabled={this.state.votePercentage > 0}>
+                    }} disabled={this.state.votePercentage > 0 || displayResults}>
                         <Delete />
                     </IconButton>                   
                 )

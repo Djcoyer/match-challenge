@@ -4,7 +4,7 @@ import { Grid, Card, CardHeader, CardContent, TextField, CardActions, Button, Ic
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchCharacters, addCharacter, deleteCharacter } from '../api/CharcaterApi';
-import {addVote, fetchVotes} from '../api/VoteApi';
+import { addVote, fetchVotes } from '../api/VoteApi';
 import SaveIcon from '@material-ui/icons/SendRounded';
 import { cardStyles, cardHeaderStyles, cardHeaderTypographyStyles, cardContentStyles, cardActionStyles } from './styles/Poll.css';
 
@@ -37,48 +37,48 @@ class Poll extends Component {
             this.setState({ characters: nextProps.characters });
         }
 
-        if(nextProps.isLoading !== this.state.isLoading) {
-            this.setState({isLoading: nextProps.isLoading});
-        }
-        
-        if(nextProps.addingCharacter !== this.state.addingCharacter) {
-            this.setState({addingCharacter: nextProps.addingCharacter});
+        if (nextProps.isLoading !== this.state.isLoading) {
+            this.setState({ isLoading: nextProps.isLoading });
         }
 
-        if(nextProps.votes != this.state.votes || nextProps.votes.length != this.state.votes.length) {
-            this.setState({votes: nextProps.votes});
+        if (nextProps.addingCharacter !== this.state.addingCharacter) {
+            this.setState({ addingCharacter: nextProps.addingCharacter });
         }
-        
-        if(nextProps.voteSubmitted !== this.state.voteSubmitted) {
-            this.setState({voteSubmitted: nextProps.voteSubmitted});
+
+        if (nextProps.votes != this.state.votes || nextProps.votes.length != this.state.votes.length) {
+            this.setState({ votes: nextProps.votes });
+        }
+
+        if (nextProps.voteSubmitted !== this.state.voteSubmitted) {
+            this.setState({ voteSubmitted: nextProps.voteSubmitted });
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevState.votes !== this.state.votes || prevState.votes.length !== this.state.votes.length) {
-            let {votes, characters} = this.state;
+        if (prevState.votes !== this.state.votes || prevState.votes.length !== this.state.votes.length) {
+            let { votes, characters } = this.state;
             let voteMap = new Map();
             characters.forEach(c => {
                 let percentage = 0;
                 let characterVotes = votes.filter(v => v.characterId === c.id);
-                if(characterVotes) {
-                    percentage = ((characterVotes.length / votes.length)*100).toFixed(2);
+                if (characterVotes) {
+                    percentage = ((characterVotes.length / votes.length) * 100).toFixed(2);
                 }
                 voteMap.set(c.id, percentage);
             });
 
-            this.setState({voteMap});
+            this.setState({ voteMap });
         }
     }
 
     getCharacterOptions = () => {
-        let {characters, voteMap, votes} = this.state;
+        let { characters, voteMap, votes } = this.state;
         return characters.map(c => {
             let votePercentage = voteMap.get(c.id);
-            return <PollItem item={c} selected={false} onSelect={this.onSelect} 
-            selected={c.id === this.state.selectedOption} 
-            onVote={this.onVote} onDelete={this.onDelete}
-            votePercentage={votePercentage} displayResults={this.state.voteSubmitted}/>
+            return <PollItem item={c} selected={false} onSelect={this.onSelect}
+                selected={c.id === this.state.selectedOption}
+                onVote={this.onVote} onDelete={this.onDelete}
+                votePercentage={votePercentage} displayResults={this.state.voteSubmitted} />
         });
     };
 
@@ -89,73 +89,77 @@ class Poll extends Component {
     };
 
     onSelect = (id) => {
-        if (this.state.selectedOption === id)
-            id = '';
-        this.setState({ selectedOption: id });
+        if (!this.state.voteSubmitted) {
+            if (this.state.selectedOption === id)
+                id = '';
+            this.setState({ selectedOption: id });
+        }
     }
 
     addCharacter = () => {
-        let {name, series} = this.state;
-        this.props.addCharacter({name,series});
-        this.setState({name:    '', series:''});
+        let { name, series } = this.state;
+        this.props.addCharacter({ name, series });
+        this.setState({ name: '', series: '' });
     };
 
     onVote = (characterId) => {
-        this.props.addVote({characterId})
+        this.props.addVote({ characterId })
     }
 
     onDelete = (id) => {
-        this.props.deleteCharacter(id);
-        let characters = this.state.characters;
-        characters =characters.filter(c => c.id !== id);
-        this.setState({characters});
+        if(!this.state.voteSubmitted) {
+            this.props.deleteCharacter(id);
+            let characters = this.state.characters;
+            characters = characters.filter(c => c.id !== id);
+            this.setState({ characters });
+        }
     }
 
     render() {
 
         return (
 
-            this.state.isLoading ? 
-            <Grid container direction="row" justify="center">
-                <Grid item>
-                    <CircularProgress/>
-                </Grid>
-            </Grid> : 
+            this.state.isLoading ?
+                <Grid container direction="row" justify="center">
+                    <Grid item>
+                        <CircularProgress />
+                    </Grid>
+                </Grid> :
 
-            <Fragment>
-                {this.getCharacterOptions()}
+                <Fragment>
+                    {this.getCharacterOptions()}
 
 
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card style={cardStyles}>
-                    <CardHeader title={"New Character"} titleTypographyProps={cardHeaderTypographyStyles} 
-                     style={cardHeaderStyles} />
-                    {this.state.addingCharacter ?
-                     <CircularProgress/> : 
-                     <Fragment>
-                     
-                     <CardContent style={cardContentStyles}>
-                         <Grid container spacing={16}>
-                             <Grid item xs={12}>
-                                 <TextField label="Name" id="name" value={this.state.name} onChange={e => this.onChange(e)} margin="none" fullWidth={true}/>
-                             </Grid>
-                             <Grid item xs={12}>
-                                 <TextField label="Series" id="series" value={this.state.series} onChange={e => this.onChange(e)} fullWidth={true} />
-                             </Grid>
-                         </Grid>
-                     </CardContent>
-                     <CardActions style={cardActionStyles}>
-                         <IconButton color="inherit" onClick={this.addCharacter}>
-                             <SaveIcon/>
-                         </IconButton>
-                     </CardActions>
-                     </Fragment>
-                    }
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card style={cardStyles}>
+                            <CardHeader title={"New Character"} titleTypographyProps={cardHeaderTypographyStyles}
+                                style={cardHeaderStyles} />
+                            {this.state.addingCharacter ?
+                                <CircularProgress /> :
+                                <Fragment>
 
-                       
-                    </Card>
-                </Grid>
-            </Fragment>
+                                    <CardContent style={cardContentStyles}>
+                                        <Grid container spacing={16}>
+                                            <Grid item xs={12}>
+                                                <TextField label="Name" id="name" value={this.state.name} onChange={e => this.onChange(e)} margin="none" fullWidth={true} />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField label="Series" id="series" value={this.state.series} onChange={e => this.onChange(e)} fullWidth={true} />
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                    <CardActions style={cardActionStyles}>
+                                        <IconButton color="inherit" onClick={this.addCharacter}>
+                                            <SaveIcon />
+                                        </IconButton>
+                                    </CardActions>
+                                </Fragment>
+                            }
+
+
+                        </Card>
+                    </Grid>
+                </Fragment>
         );
     };
 }
