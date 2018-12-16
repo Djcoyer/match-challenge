@@ -115,22 +115,10 @@ class Poll extends Component {
         }
     }
 
-    render() {
-
-        return (
-
-            this.state.isLoading ?
-                <Grid container direction="row" justify="center">
-                    <Grid item>
-                        <CircularProgress />
-                    </Grid>
-                </Grid> :
-
-                <Fragment>
-                    {this.getCharacterOptions()}
-
-
-                    <Grid item xs={12} sm={6} md={4}>
+    getCharacterCreationCard = () => {
+        if(!this.state.voteSubmitted) {
+            return (
+                <Grid item xs={12} sm={6} md={4}>
                         <Card style={cardStyles}>
                             <CardHeader title={"New Character"} titleTypographyProps={cardHeaderTypographyStyles}
                                 style={cardHeaderStyles} />
@@ -159,6 +147,26 @@ class Poll extends Component {
 
                         </Card>
                     </Grid>
+            )
+        } else return null;
+    }
+
+
+    
+    render() {
+
+        return (
+
+            this.state.isLoading ?
+                <Grid container direction="row" justify="center">
+                    <Grid item>
+                        <CircularProgress />
+                    </Grid>
+                </Grid> :
+
+                <Fragment>
+                    {this.getCharacterOptions()}
+                    {this.getCharacterCreationCard()}
                 </Fragment>
         );
     };
