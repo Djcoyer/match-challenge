@@ -22,14 +22,10 @@ const subHeaderTypographyStyles = {
     color: 'inherit'
 }
 
-const avatarStyles = selected => {
-    return {
+const avatarStyles = {
         margin: 10,
         width: 50,
-        height: 50,
-        color: selected ? '#37474F' : '#fafafa', 
-        backgroundColor: selected ? '#fafafa' : '#bdbdbd'
-    }
+        height: 50
 }
 
 const sendButtonStyles = {
