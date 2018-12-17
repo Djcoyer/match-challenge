@@ -24,6 +24,9 @@ const subHeaderTypographyStyles = {
 
 const avatarStyles = selected => {
     return {
+        margin: 10,
+        width: 50,
+        height: 50,
         color: selected ? '#37474F' : '#fafafa', 
         backgroundColor: selected ? '#fafafa' : '#bdbdbd'
     }
