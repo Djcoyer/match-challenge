@@ -3,7 +3,7 @@ import PollItem from './PollItem';
 import { Grid, Card, CardHeader, CardContent, TextField, CardActions, Button, IconButton, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchCharacters, addCharacter, deleteCharacter } from '../api/CharcaterApi';
+import { fetchCharacters, addCharacter, deleteCharacter } from '../api/CharacterApi';
 import { addVote, fetchVotes } from '../api/VoteApi';
 import SaveIcon from '@material-ui/icons/SendRounded';
 import { cardStyles, cardHeaderStyles, cardHeaderTypographyStyles, cardContentStyles, cardActionStyles } from './styles/Poll.css';
