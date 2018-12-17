@@ -29,7 +29,15 @@ const avatarStyles = selected => {
     }
 }
 
+const sendButtonStyles = {
+    color: '#fafafa'
+}
 
+const cardContentStyles = props => {
+    return {
+        color: props.selected ? '#fafafa' : '#0091EA'
+    }
+}
 
 
 
@@ -40,5 +48,7 @@ export {
     cardStyles,
     cardHeaderTypographyStyles,
     avatarStyles,
-    subHeaderTypographyStyles
+    subHeaderTypographyStyles,
+    sendButtonStyles,
+    cardContentStyles
 };

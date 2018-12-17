@@ -3,7 +3,7 @@ import { Grid, Card, Avatar, CardHeader, IconButton, CardContent, CircularProgre
 import Person from '@material-ui/icons/Person';
 import Delete from '@material-ui/icons/Delete';
 import Check from '@material-ui/icons/SendRounded';
-import { cardStyles, fontStyles, cardHeaderTypographyStyles, avatarStyles, subHeaderTypographyStyles } from './styles/PollItem.css';
+import { cardStyles, fontStyles, cardHeaderTypographyStyles, avatarStyles, subHeaderTypographyStyles, sendButtonStyles, cardContentStyles } from './styles/PollItem.css';
 
 class PollItem extends Component {
     constructor(props) {
@@ -45,17 +45,17 @@ class PollItem extends Component {
         let { item, selected, hovered, displayResults} = this.state;
 
         let button = () => {
-            if (selected) {
+            if (selected && !displayResults) {
                 return (
                     <IconButton onClick={e => {
                         e.stopPropagation();
                         this.props.onVote(item.id);
-                    }} style={{color:'#fafafa'}} disabled={this.state.displayResults}>
+                    }} style={sendButtonStyles} disabled={this.state.displayResults}>
                         <Check/>
                     </IconButton>
 
                 );
-            } else {
+            } else if(!displayResults) {
                 return (
                     <IconButton onClick={e => {
                         e.stopPropagation();
@@ -64,7 +64,7 @@ class PollItem extends Component {
                         <Delete />
                     </IconButton>                   
                 )
-            }
+            } else return null;
 
 
         };
@@ -73,7 +73,7 @@ class PollItem extends Component {
             if(!displayResults) 
             return null;
             return ( 
-                <CardContent style={{color: selected ? '#fafafa' : '#0091EA'}}>
+                <CardContent style={cardContentStyles({selected})}>
                     <Grid container direction="row" justify="center">
                         <Grid item>
                         <Typography variant="h6" color="inherit">

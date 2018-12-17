@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Poll from './Poll';
 import {AppBar, Toolbar, Typography, Grid} from '@material-ui/core';
+import { rowStyles, gridContainerStyles, appBarStyles, appBarClasses } from './styles/CharacterPoll.css';
 
 
 class CharacterPoll extends Component {
@@ -24,18 +25,18 @@ class CharacterPoll extends Component {
 
         return (
             <Fragment>
-                <AppBar color={"secondary"} classes={{colorSecondary: '#202124'}} position="static" style={{backgroundColor:'#202124'}}>
+                <AppBar color={"secondary"} classes={appBarClasses} position="static" style={appBarStyles}>
                     <Toolbar>
                         <Typography variant="h6" color="inherit" noWrap>
                             Character Poll
                         </Typography>
                     </Toolbar>
                 </AppBar> 
-                <div className="row" style={{marginBottom:'2rem'}}>
+                <div style={rowStyles}>
 
                 </div>
 
-                <Grid container spacing={24} style={{paddingLeft: '1rem', paddingRight:'1rem'}}>
+                <Grid container spacing={24} style={gridContainerStyles}>
                     <Poll/>
                 </Grid>
             </Fragment>

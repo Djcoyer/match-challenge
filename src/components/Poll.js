@@ -23,7 +23,8 @@ class Poll extends Component {
             isLoading: this.props.isLoading,
             addingCharacter: this.props.addingCharacter,
             voteMap: new Map(),
-            voteSubmitted: this.props.voteSubmitted
+            voteSubmitted: this.props.voteSubmitted,
+            characterError: {}
         }
     }
 
@@ -98,8 +99,20 @@ class Poll extends Component {
 
     addCharacter = () => {
         let { name, series } = this.state;
-        this.props.addCharacter({ name, series });
-        this.setState({ name: '', series: '' });
+        let characterError = {};
+        if(!name) {
+            characterError = {...characterError, name};
+        }
+        if(!series) {
+            characterError = {...characterError, series};
+        }
+        
+        if(Object.keys(characterError).length === 0) {
+            this.props.addCharacter({ name, series });
+        this.setState({ name: '', series: '', characterError: {}});
+        } else this.setState({characterError});
+
+        
     };
 
     onVote = (characterId) => {
@@ -116,6 +129,8 @@ class Poll extends Component {
     }
 
     getCharacterCreationCard = () => {
+        let error = this.state.characterError;
+
         if(!this.state.voteSubmitted) {
             return (
                 <Grid item xs={12} sm={6} md={4}>
@@ -129,10 +144,10 @@ class Poll extends Component {
                                     <CardContent style={cardContentStyles}>
                                         <Grid container spacing={16}>
                                             <Grid item xs={12}>
-                                                <TextField label="Name" id="name" value={this.state.name} onChange={e => this.onChange(e)} margin="none" fullWidth={true} />
+                                                <TextField required error={error.name != null} label="Name" id="name" value={this.state.name} onChange={e => this.onChange(e)} margin="none" fullWidth={true} />
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <TextField label="Series" id="series" value={this.state.series} onChange={e => this.onChange(e)} fullWidth={true} />
+                                                <TextField required error={error.series != null} label="Series" id="series" value={this.state.series} onChange={e => this.onChange(e)} fullWidth={true} />
                                             </Grid>
                                         </Grid>
                                     </CardContent>
@@ -143,16 +158,12 @@ class Poll extends Component {
                                     </CardActions>
                                 </Fragment>
                             }
-
-
                         </Card>
                     </Grid>
             )
         } else return null;
     }
 
-
-    
     render() {
 
         return (
