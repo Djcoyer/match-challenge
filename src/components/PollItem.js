@@ -91,7 +91,7 @@ class PollItem extends Component {
                 <Card raised={hovered || selected} style={cardStyles(selected)} onClick={() => this.props.onSelect(item.id)}
                     onMouseOver={() => this.setHover(true)} onMouseLeave={() => this.setHover(false)}>
                     <CardHeader action={button()}
-                        avatar={<Avatar style={avatarStyles(selected)}><Person /></Avatar>}
+                        avatar={<Avatar style={avatarStyles(selected)} src={item.imgSrc}/>}
                         title={item.name} titleTypographyProps={cardHeaderTypographyStyles}
                         style={fontStyles(selected)} subheader={item.series} subheaderTypographyProps={subHeaderTypographyStyles}/>
 

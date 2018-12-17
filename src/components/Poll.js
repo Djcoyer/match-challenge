@@ -18,6 +18,7 @@ class Poll extends Component {
             selectedOption: '',
             name: '',
             series: '',
+            imgSrc: '',
             characters: this.props.characters,
             votes: this.props.votes,
             isLoading: this.props.isLoading,
@@ -98,7 +99,7 @@ class Poll extends Component {
     }
 
     addCharacter = () => {
-        let { name, series } = this.state;
+        let { name, series, imgSrc } = this.state;
         let characterError = {};
         if(!name) {
             characterError = {...characterError, name};
@@ -106,10 +107,13 @@ class Poll extends Component {
         if(!series) {
             characterError = {...characterError, series};
         }
+        if(!imgSrc) {
+            characterError = {...characterError, imgSrc};
+        }
         
         if(Object.keys(characterError).length === 0) {
-            this.props.addCharacter({ name, series });
-        this.setState({ name: '', series: '', characterError: {}});
+            this.props.addCharacter({ name, series, imgSrc});
+        this.setState({ name: '', series: '', imgSrc:'', characterError: {}});
         } else this.setState({characterError});
 
         
@@ -148,6 +152,9 @@ class Poll extends Component {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <TextField required error={error.series != null} label="Series" id="series" value={this.state.series} onChange={e => this.onChange(e)} fullWidth={true} />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField required error={error.imgSrc != null} label="Image URL" id="imgSrc" value={this.state.imgSrc} onChange={e => this.onChange(e)} fullWidth={true} />
                                             </Grid>
                                         </Grid>
                                     </CardContent>
