@@ -20,6 +20,12 @@ You will also see any lint errors in the console.
 
 This application was designed to allow users to vote for their all-time favorite character from any series! If the character you want to vote for doesn't exist as an option, feel free to add and vote for them! After your vote is submitted, you'll be able to see the percentage of votes that have been cast for each character to see how your favorite compares to the rest!
 
+Some basic information about the functionality of the application:
+
+1) Clicking on a character card will select it and allow you to submit a vote (indicated by the send icon) for that character.
+2) Only one vote may be submitted per session (refresh allows another vote to be submitted)
+3) A character card may be removed **only** if the character has no associated votes, as in the case of adding 'Captain Amerca' instead of 'Captain America'. Deletion is indicated by the trash icon on the card.
+
 ### Technologies
 
 This project was created using React.js, Redux.js, along with Google's Firebase and Material UI libraries. 
