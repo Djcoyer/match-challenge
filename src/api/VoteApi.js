@@ -9,9 +9,6 @@ function addVote(vote) {
     return dispatch => {
         dispatch(addingVote());
         vote.createdOn = new Date();
-        
-        //Placeholder
-        vote.createdBy = "Devyn Coyer";
         votes.add(vote)
         .then(docRef => {
             dispatch(addVoteSuccess({id:docRef.id, ...vote}));
