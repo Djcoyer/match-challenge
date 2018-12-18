@@ -29,7 +29,7 @@ function fetchVotes() {
             let votes = [];
              querySnapshot.forEach(doc => {
                 let data = doc.data();
-                votes.push(new Vote(doc.id, data.characterId, data.createdBy, data.createdOn));
+                votes.push(new Vote(doc.id, data.characterId, data.createdOn));
             });
             dispatch(fetchVotesSuccess(votes));
 
