@@ -9,16 +9,8 @@ class CharacterPoll extends Component {
         super(props);
 
         this.state = {
-            characters: [],
-            err: null,
-            isLoading: false,
-            newCharacterName: '',
-            selectedOption: null
+
         };
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
     }
     
     render() {

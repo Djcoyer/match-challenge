@@ -10,7 +10,7 @@ class PollItem extends Component {
         super(props);
 
         this.state = {
-            selected: false,
+            selected: this.props.selected,
             hovered: false,
             item: this.props.item,
             votePercentage: this.props.votePercentage,
